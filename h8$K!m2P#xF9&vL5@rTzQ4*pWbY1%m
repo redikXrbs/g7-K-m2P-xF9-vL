@@ -1,0 +1,84 @@
+local url = "https://raw.githubusercontent.com/redikXrbs/data-list/refs/heads/main/whitelist.json"
+local whitelist = game:HttpGet(url)
+whitelist = game:GetService("HttpService"):JSONDecode(whitelist)
+local plr = game.Players.LocalPlayer
+local allowed = false
+for _, name in pairs(whitelist) do if plr.Name == name then allowed = true break end end
+if not allowed then plr:Kick("that's not for you lil bro") return end
+local s = Instance.new("ScreenGui"); s.Name = "RBS_Tech"; s.Parent = game:GetService("CoreGui")
+local main = Instance.new("Frame"); main.Size = UDim2.new(0,280,0,290); main.Position = UDim2.new(0.5,-140,0.5,-145); main.BackgroundColor3 = Color3.fromRGB(0,0,0); main.BackgroundTransparency = 0.3; main.BorderSizePixel = 1; main.BorderColor3 = Color3.fromRGB(60,60,65); main.Active = true; main.Parent = s; local c = Instance.new("UICorner"); c.CornerRadius = UDim.new(0,12); c.Parent = main
+local foldBtn = Instance.new("TextButton"); foldBtn.Size = UDim2.new(0,28,0,28); foldBtn.Position = UDim2.new(1,-32,0,0); foldBtn.BackgroundTransparency = 1; foldBtn.Text = "—"; foldBtn.TextColor3 = Color3.fromRGB(200,200,200); foldBtn.TextSize = 20; foldBtn.Font = Enum.Font.GothamBold; foldBtn.Parent = main
+local mini = Instance.new("TextButton"); mini.Size = UDim2.new(0,50,0,50); mini.Position = UDim2.new(0.5,-25,0.5,-25); mini.BackgroundColor3 = Color3.fromRGB(0,0,0); mini.BackgroundTransparency = 0.2; mini.BorderSizePixel = 1; mini.BorderColor3 = Color3.fromRGB(60,60,65); mini.Text = "R"; mini.TextColor3 = Color3.fromRGB(220,220,255); mini.TextSize = 32; mini.Font = Enum.Font.GothamBlack; mini.Visible = false; mini.Parent = s; local mc = Instance.new("UICorner"); mc.CornerRadius = UDim.new(0,12); mc.Parent = mini; local ms = Instance.new("UIStroke"); ms.Color = Color3.fromRGB(80,80,100); ms.Thickness = 1; ms.Parent = mini
+local md, mds, msp, isDraggingMini = false, nil, nil, false
+mini.InputBegan:Connect(function(i) if i.UserInputType == Enum.UserInputType.MouseButton1 or i.UserInputType == Enum.UserInputType.Touch then md = true; mds = i.Position; msp = mini.Position; isDraggingMini = false end end)
+mini.InputEnded:Connect(function(i) if i.UserInputType == Enum.UserInputType.MouseButton1 or i.UserInputType == Enum.UserInputType.Touch then md = false end end)
+game:GetService("UserInputService").InputChanged:Connect(function(i) if md and (i.UserInputType == Enum.UserInputType.MouseMovement or i.UserInputType == Enum.UserInputType.Touch) then local delta = i.Position - mds; if delta.Magnitude > 3 then isDraggingMini = true end; mini.Position = UDim2.new(msp.X.Scale, msp.X.Offset + delta.X, msp.Y.Scale, msp.Y.Offset + delta.Y) end end)
+local d, ds, sp, isDragging = false, nil, nil, false
+main.InputBegan:Connect(function(i) if i.UserInputType == Enum.UserInputType.MouseButton1 or i.UserInputType == Enum.UserInputType.Touch then d = true; ds = i.Position; sp = main.Position; isDragging = false end end)
+main.InputEnded:Connect(function(i) if i.UserInputType == Enum.UserInputType.MouseButton1 or i.UserInputType == Enum.UserInputType.Touch then d = false end end)
+game:GetService("UserInputService").InputChanged:Connect(function(i) if d and (i.UserInputType == Enum.UserInputType.MouseMovement or i.UserInputType == Enum.UserInputType.Touch) then local delta = i.Position - ds; if delta.Magnitude > 3 then isDragging = true end; main.Position = UDim2.new(sp.X.Scale, sp.X.Offset + delta.X, sp.Y.Scale, sp.Y.Offset + delta.Y) end end)
+local t = Instance.new("TextLabel"); t.Size = UDim2.new(1,-40,0,26); t.Position = UDim2.new(0,5,0,0); t.BackgroundTransparency = 1; t.Text = "⚔️ RBS Tech v1.2"; t.TextColor3 = Color3.fromRGB(255,255,255); t.TextSize = 17; t.TextXAlignment = Enum.TextXAlignment.Left; t.Font = Enum.Font.GothamMedium; t.Parent = main
+local ib = Instance.new("TextBox"); ib.Size = UDim2.new(0.8,0,0,24); ib.Position = UDim2.new(0.1,0,0.18,0); ib.BackgroundColor3 = Color3.fromRGB(15,15,20); ib.BackgroundTransparency = 0.5; ib.BorderSizePixel = 1; ib.BorderColor3 = Color3.fromRGB(60,60,65); ib.TextColor3 = Color3.fromRGB(255,255,255); ib.PlaceholderText = "username"; ib.PlaceholderColor3 = Color3.fromRGB(120,120,140); ib.Text = ""; ib.TextScaled = true; ib.Font = Enum.Font.Gotham; ib.ClearTextOnFocus = false; ib.Parent = main; local c3 = Instance.new("UICorner"); c3.CornerRadius = UDim.new(0,8); c3.Parent = ib
+local tb = Instance.new("TextButton"); tb.Size = UDim2.new(0.3,0,0,22); tb.Position = UDim2.new(0.05,0,0.36,0); tb.BackgroundColor3 = Color3.fromRGB(25,25,30); tb.BackgroundTransparency = 0.3; tb.BorderSizePixel = 1; tb.BorderColor3 = Color3.fromRGB(60,60,65); tb.Text = "TP:OFF"; tb.TextColor3 = Color3.fromRGB(200,200,200); tb.TextSize = 11; tb.Font = Enum.Font.GothamSemibold; tb.Parent = main; local c5 = Instance.new("UICorner"); c5.CornerRadius = UDim.new(0,8); c5.Parent = tb
+local spb = Instance.new("TextButton"); spb.Size = UDim2.new(0.3,0,0,22); spb.Position = UDim2.new(0.6,0,0.36,0); spb.BackgroundColor3 = Color3.fromRGB(25,25,30); spb.BackgroundTransparency = 0.3; spb.BorderSizePixel = 1; spb.BorderColor3 = Color3.fromRGB(60,60,65); spb.Text = "Spec:OFF"; spb.TextColor3 = Color3.fromRGB(200,200,200); spb.TextSize = 11; spb.Font = Enum.Font.GothamSemibold; spb.Parent = main; local c10 = Instance.new("UICorner"); c10.CornerRadius = UDim.new(0,8); c10.Parent = spb
+local dl = Instance.new("TextLabel"); dl.Size = UDim2.new(0.25,0,0,16); dl.Position = UDim2.new(0.05,0,0.5,0); dl.BackgroundTransparency = 1; dl.Text = "Dist:"; dl.TextColor3 = Color3.fromRGB(180,180,200); dl.TextScaled = true; dl.Font = Enum.Font.Gotham; dl.Parent = main
+local dsb = Instance.new("TextBox"); dsb.Size = UDim2.new(0.4,0,0,20); dsb.Position = UDim2.new(0.3,0,0.49,0); dsb.BackgroundColor3 = Color3.fromRGB(15,15,20); dsb.BackgroundTransparency = 0.5; dsb.BorderSizePixel = 1; dsb.BorderColor3 = Color3.fromRGB(60,60,65); dsb.TextColor3 = Color3.fromRGB(255,255,255); dsb.Text = "5"; dsb.TextScaled = true; dsb.Font = Enum.Font.Gotham; dsb.ClearTextOnFocus = false; dsb.Parent = main; local c4 = Instance.new("UICorner"); c4.CornerRadius = UDim.new(0,8); c4.Parent = dsb
+local nl = Instance.new("TextLabel"); nl.Size = UDim2.new(0.25,0,0,16); nl.Position = UDim2.new(0.05,0,0.6,0); nl.BackgroundTransparency = 1; nl.Text = "Noclip:"; nl.TextColor3 = Color3.fromRGB(180,180,200); nl.TextScaled = true; nl.Font = Enum.Font.Gotham; nl.Parent = main
+local nb = Instance.new("TextButton"); nb.Size = UDim2.new(0.25,0,0,20); nb.Position = UDim2.new(0.3,0,0.59,0); nb.BackgroundColor3 = Color3.fromRGB(25,25,30); nb.BackgroundTransparency = 0.3; nb.BorderSizePixel = 1; nb.BorderColor3 = Color3.fromRGB(60,60,65); nb.Text = "OFF"; nb.TextColor3 = Color3.fromRGB(200,200,200); nb.TextSize = 11; nb.Font = Enum.Font.GothamSemibold; nb.Parent = main; local c7 = Instance.new("UICorner"); c7.CornerRadius = UDim.new(0,8); c7.Parent = nb
+local al = Instance.new("TextLabel"); al.Size = UDim2.new(0.3,0,0,16); al.Position = UDim2.new(0.05,0,0.7,0); al.BackgroundTransparency = 1; al.Text = "Abilities:"; al.TextColor3 = Color3.fromRGB(180,180,200); al.TextScaled = true; al.Font = Enum.Font.Gotham; al.Parent = main
+local sb = Instance.new("TextButton"); sb.Size = UDim2.new(0.28,0,0,20); sb.Position = UDim2.new(0.04,0,0.78,0); sb.BackgroundColor3 = Color3.fromRGB(25,25,30); sb.BackgroundTransparency = 0.3; sb.BorderSizePixel = 1; sb.BorderColor3 = Color3.fromRGB(60,60,65); sb.Text = "M1:OFF"; sb.TextColor3 = Color3.fromRGB(200,200,200); sb.TextSize = 11; sb.Font = Enum.Font.GothamSemibold; sb.Parent = main; local c6 = Instance.new("UICorner"); c6.CornerRadius = UDim.new(0,8); c6.Parent = sb
+local ab = Instance.new("TextButton"); ab.Size = UDim2.new(0.28,0,0,20); ab.Position = UDim2.new(0.36,0,0.78,0); ab.BackgroundColor3 = Color3.fromRGB(25,25,30); ab.BackgroundTransparency = 0.3; ab.BorderSizePixel = 1; ab.BorderColor3 = Color3.fromRGB(60,60,65); ab.Text = "R:OFF"; ab.TextColor3 = Color3.fromRGB(200,200,200); ab.TextSize = 11; ab.Font = Enum.Font.GothamSemibold; ab.Parent = main; local c8 = Instance.new("UICorner"); c8.CornerRadius = UDim.new(0,8); c8.Parent = ab
+local stub = Instance.new("TextButton"); stub.Size = UDim2.new(0.28,0,0,20); stub.Position = UDim2.new(0.68,0,0.78,0); stub.BackgroundColor3 = Color3.fromRGB(25,25,30); stub.BackgroundTransparency = 0.3; stub.BorderSizePixel = 1; stub.BorderColor3 = Color3.fromRGB(60,60,65); stub.Text = "Stand:OFF"; stub.TextColor3 = Color3.fromRGB(200,200,200); stub.TextSize = 11; stub.Font = Enum.Font.GothamSemibold; stub.Parent = main; local c9 = Instance.new("UICorner"); c9.CornerRadius = UDim.new(0,8); c9.Parent = stub
+local en, spm, ncp, autoStand, autoR, spec = false, false, false, false, false, false
+local tn, dist = "", 5
+local st, standt, rt = 0, 0, 0
+local function isAlive() local p = game.Players.LocalPlayer; if not p then return false end; local char = p.Character; if not char then return false end; local mh = char:FindFirstChild("Humanoid"); if not mh then return false end; return mh.Health > 0 end
+local function findTarget(input) if input == "" then return nil end; local inputLower = string.lower(input) or ""; for _, p in pairs(game.Players:GetPlayers()) do if p ~= game.Players.LocalPlayer and string.find(string.lower(p.Name), inputLower, 1, true) then return p end end; return nil end
+local function m1() if not isAlive() then return end; local p = game.Players.LocalPlayer; local e = p.Character:FindFirstChild("RemoteEvent"); if not e then return end; e:FireServer("Attack", "m1") end
+local function useR() if not isAlive() then return end; local p = game.Players.LocalPlayer; local e = p.Character:FindFirstChild("RemoteEvent"); if not e then return end; e:FireServer("InputBegan", { Input = Enum.KeyCode.R }) end
+local function toggleStand() if not isAlive() then return end; local p = game.Players.LocalPlayer; local e = p.Character:FindFirstChild("RemoteEvent"); if not e then return end; e:FireServer("ToggleStand", true) end
+game:GetService("RunService").RenderStepped:Connect(function()
+    if not isAlive() then return end
+    local p = game.Players.LocalPlayer
+    local char = p.Character
+    local mh = char:FindFirstChild("Humanoid")
+    local hrp = char:FindFirstChild("HumanoidRootPart")
+    if not hrp then return end
+    local noclipActive = (en and true) or ncp
+    if noclipActive then for _, v in pairs(char:GetDescendants()) do if v:IsA("BasePart") then v.CanCollide = false end end else for _, v in pairs(char:GetDescendants()) do if v:IsA("BasePart") and not v:IsA("HumanoidRootPart") then v.CanCollide = true end end end
+    local trg, tr = nil, nil
+    if tn ~= "" then trg = findTarget(tn); if trg and trg.Character then tr = trg.Character:FindFirstChild("HumanoidRootPart") end end
+    if spec and tr then game.Workspace.CurrentCamera.CFrame = CFrame.new(tr.Position + Vector3.new(0,5,10), tr.Position) end
+    local inRange = false
+    if en and tr then
+        local currentDist = (hrp.Position - tr.Position).Magnitude
+        if currentDist <= dist + 15 then inRange = true end
+        local targetPos = tr.Position - tr.CFrame.LookVector * dist
+        local distToTarget = (targetPos - hrp.Position).Magnitude
+        if distToTarget > 1 then
+            local direction = (targetPos - hrp.Position).Unit
+            local speed = math.min(95, distToTarget * 12)
+            hrp.Velocity = direction * speed + Vector3.new(0, hrp.Velocity.Y, 0)
+            hrp.CFrame = CFrame.new(hrp.Position, tr.Position)
+            mh.AutoRotate = false
+        else
+            hrp.Velocity = Vector3.new(0, hrp.Velocity.Y, 0)
+            hrp.CFrame = CFrame.new(hrp.Position, tr.Position)
+        end
+    end
+    if spm and inRange then st = st + 0.016; if st >= 0.15 then st = 0; m1() end else st = 0 end
+    if autoR and inRange then rt = rt + 0.016; if rt >= 0.6 then rt = 0; useR() end else rt = 0 end
+    if autoStand then standt = standt + 0.016; if standt >= 0.3 then standt = 0; toggleStand() end else standt = 0 end
+end)
+game:GetService("CoreGui").ChildRemoved:Connect(function(child) if child.Name == "RBS_Tech" then local ng = Instance.new("ScreenGui"); ng.Name = "RBS_Tech"; ng.Parent = game:GetService("CoreGui"); main.Parent = ng; mini.Parent = ng end end)
+ib:GetPropertyChangedSignal("Text"):Connect(function() tn = ib.Text end)
+dsb:GetPropertyChangedSignal("Text"):Connect(function() local d = tonumber(dsb.Text); if d and d >= 2 and d <= 15 then dist = d else dsb.Text = tostring(dist) end end)
+tb.MouseButton1Click:Connect(function() en = not en; tb.Text = en and "TP:ON" or "TP:OFF"; tb.TextColor3 = en and Color3.fromRGB(130,255,130) or Color3.fromRGB(200,200,200) end)
+spb.MouseButton1Click:Connect(function() spec = not spec; spb.Text = spec and "Spec:ON" or "Spec:OFF"; spb.TextColor3 = spec and Color3.fromRGB(130,255,130) or Color3.fromRGB(200,200,200) end)
+nb.MouseButton1Click:Connect(function() ncp = not ncp; nb.Text = ncp and "ON" or "OFF"; nb.TextColor3 = ncp and Color3.fromRGB(130,255,130) or Color3.fromRGB(200,200,200) end)
+sb.MouseButton1Click:Connect(function() spm = not spm; sb.Text = spm and "M1:ON" or "M1:OFF"; sb.TextColor3 = spm and Color3.fromRGB(130,255,130) or Color3.fromRGB(200,200,200) end)
+ab.MouseButton1Click:Connect(function() autoR = not autoR; ab.Text = autoR and "R:ON" or "R:OFF"; ab.TextColor3 = autoR and Color3.fromRGB(130,255,130) or Color3.fromRGB(200,200,200) end)
+stub.MouseButton1Click:Connect(function() autoStand = not autoStand; stub.Text = autoStand and "Stand:ON" or "Stand:OFF"; stub.TextColor3 = autoStand and Color3.fromRGB(130,255,130) or Color3.fromRGB(200,200,200) end)
+foldBtn.MouseButton1Click:Connect(function() main.Visible = false; mini.Visible = true; mini.Position = main.Position end)
+mini.MouseButton1Click:Connect(function() if isDraggingMini then isDraggingMini = false; return end; main.Visible = true; mini.Visible = false; main.Position = mini.Position end)
+game:GetService("UserInputService").InputBegan:Connect(function(i, g) if g then return end; if i.KeyCode == Enum.KeyCode.Insert then if main.Visible then main.Visible = false; mini.Visible = true; mini.Position = main.Position else main.Visible = true; mini.Visible = false; main.Position = mini.Position end end end)
